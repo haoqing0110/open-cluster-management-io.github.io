@@ -38,6 +38,10 @@
     </url>
     
     <url>
+        <loc>http://open-cluster-management.io/scenarios/integration-with-argocd</loc>
+    </url>
+    
+    <url>
         <loc>http://open-cluster-management.io/scenarios/pushing-kube-api-requests</loc>
     </url>
     
@@ -83,6 +87,14 @@
     
     <url>
         <loc>http://open-cluster-management.io/community</loc>
+    </url>
+    
+    <url>
+        <loc>http://open-cluster-management.io/developer-guides</loc>
+    </url>
+    
+    <url>
+        <loc>http://open-cluster-management.io/developer-guides/addon</loc>
     </url>
     
     <url>
@@ -154,6 +166,10 @@
     </url>
     
     <url>
+        <loc>http://open-cluster-management.io/governance-policy-framework-addon</loc>
+    </url>
+    
+    <url>
         <loc>http://open-cluster-management.io/governance-policy-propagator</loc>
     </url>
     
@@ -215,6 +231,9 @@
     </url>
     <url>
         <loc>http://open-cluster-management.io/governance-policy-addon-controller?go-get=1</loc>
+    </url>
+    <url>
+        <loc>http://open-cluster-management.io/governance-policy-framework-addon?go-get=1</loc>
     </url>
     <url>
         <loc>http://open-cluster-management.io/governance-policy-nucleus?go-get=1</loc>

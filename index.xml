@@ -93,6 +93,16 @@ The original cluster model in OCM &amp;ldquo;Managed Cluster&amp;rdquo; is desig
     </item>
     
     <item>
+      <title>Integration with Argo CD</title>
+      <link>http://open-cluster-management.io/scenarios/integration-with-argocd/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://open-cluster-management.io/scenarios/integration-with-argocd/</guid>
+      <description>Argo CD is a declarative, GitOps continuous delivery tool, which allows developers to define and control deployment of Kubernetes application resources from within their existing Git workflow. By integrating Open Cluster Management (OCM) with Argo CD, it enables both automation and greater flexibility managing Argo CD Applications across a large number of OCM managed clusters.
+In this article, we want to show you how to integrate Argo CD with OCM and deploy application to OCM managed clusters by leveraging the Placement API, which supports multi-cluster scheduling.</description>
+    </item>
+    
+    <item>
       <title>Pushing Kubernetes API requests to the managed clusters</title>
       <link>http://open-cluster-management.io/scenarios/pushing-kube-api-requests/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -137,7 +147,7 @@ Ensure golang is installed, if you are planning to install from the source.</des
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://open-cluster-management.io/concepts/managedclusterset/</guid>
-      <description>What is ManagedClusterSet? Operates ManagedClusterSet using clusteradm  Creating a ManagedClusterSet Adding a ManagedCluster to a ManagedClusterSet Bind the clusterset to a workspace namespace   A glance at the &amp;ldquo;ManagedClusterSet&amp;rdquo; API  Clusterset RBAC permission control  Adding member cluster to a clusterset Binding a clusterset to a namespace     Default ManagedClusterSet Global ManagedClusterSet     What is ManagedClusterSet? ManagedClusterSet is a cluster scoped API in the hub cluster for grouping a few managed clusters into a &amp;ldquo;set&amp;rdquo; so that hub admin can operate these clusters altogether in a higher level.</description>
+      <description>What is ManagedClusterSet? Operates ManagedClusterSet using clusteradm  Creating a ManagedClusterSet Adding a ManagedCluster to a ManagedClusterSet Bind the clusterset to a workspace namespace   A glance at the &amp;ldquo;ManagedClusterSet&amp;rdquo; API  Clusterset RBAC permission control  Adding member cluster to a clusterset Binding a clusterset to a namespace     Default ManagedClusterSet Global ManagedClusterSet     API-CHANGE NOTE: The ManagedClusterSet and ManagedClusterSetBinding API v1alpha1 version will no longer be served in OCM v0.</description>
     </item>
     
     <item>
@@ -155,7 +165,8 @@ Ensure golang is installed, if you are planning to install from the source.</des
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://open-cluster-management.io/concepts/placement/</guid>
-      <description>Overall Select clusters in ManagedClusterSet  Predicates  Label/Claim selection Taints/Tolerations   Prioritizers  Score-based prioritizer     Extensible scheduling Future work     API-CHANGE NOTE: Placement and PlacementDecision API is upgraded from v1alpha1 to v1beta1, v1alpha1 will be deprecated in OCM v0.7.0 and planned to be removed in the future. The field spec.prioritizerPolicy.configurations.name in Placement API v1alpha1 is removed and replaced by spec.</description>
+      <description>Overall Select clusters in ManagedClusterSet  Predicates  Label/Claim selection Taints/Tolerations   Prioritizers  Score-based prioritizer     Extensible scheduling Troubleshooting  Check the Placement conditions Check the Placement events   Future work     API-CHANGE NOTE: The Placement and PlacementDecision API v1alpha1 version will no longer be served in in OCM v0.9.0.
+ Migrate manifests and API clients to use the Placement and PlacementDecision API v1beta1 version, available since OCM v0.</description>
     </item>
     
     <item>
@@ -166,6 +177,16 @@ Ensure golang is installed, if you are planning to install from the source.</des
       <guid>http://open-cluster-management.io/concepts/addon/</guid>
       <description>What is an add-on? Open-cluster-management has a built-in mechanism named addon-framework to help developers to develop an extension based on the foundation components for the purpose of working with multiple clusters in custom cases. A typical addon should consist of two kinds of components:
   Addon Agent: A kubernetes controller in the managed cluster that manages the managed cluster for the hub admins. A typical addon agent is expected to be working by subscribing the prescriptions (e.</description>
+    </item>
+    
+    <item>
+      <title>Add-on Developer Guide</title>
+      <link>http://open-cluster-management.io/developer-guides/addon/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://open-cluster-management.io/developer-guides/addon/</guid>
+      <description>This page is a developer guide about how to build an OCM add-on using addon-framework.
+   Overview Write your first add-on  Implement the addon manager Deploy the add-on manager on your hub cluster  RBAC of the addon manager ClusterManagementAddOn   Enable the add-on for a managed cluster. Disable the add-on for a managed cluster What’s the next   Add-on agent configurations  Monitor addon healthiness Automatic installation Register your add-on Add your add-on agent supported configurations   Build an addon using helm charts or raw manifests.</description>
     </item>
     
     <item>
@@ -281,6 +302,15 @@ Prerequisite You must meet the following prerequisites to install the applicatio
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>http://open-cluster-management.io/governance-policy-addon-controller/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Governance Policy Framework Addon</title>
+      <link>http://open-cluster-management.io/governance-policy-framework-addon/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://open-cluster-management.io/governance-policy-framework-addon/</guid>
       <description></description>
     </item>
     

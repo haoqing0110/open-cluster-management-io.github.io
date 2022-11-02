@@ -30,6 +30,10 @@
     </url>
     
     <url>
+        <loc>http://open-cluster-management.io/zh/scenarios/integration-with-argocd</loc>
+    </url>
+    
+    <url>
         <loc>http://open-cluster-management.io/zh/getting-started/administration/upgrading</loc>
     </url>
     
@@ -86,7 +90,15 @@
     </url>
     
     <url>
+        <loc>http://open-cluster-management.io/zh/developer-guides</loc>
+    </url>
+    
+    <url>
         <loc>http://open-cluster-management.io/zh/concepts/addon</loc>
+    </url>
+    
+    <url>
+        <loc>http://open-cluster-management.io/zh/developer-guides/addon</loc>
     </url>
     
     <url>
@@ -159,6 +171,9 @@
     </url>
     <url>
         <loc>http://open-cluster-management.io/governance-policy-addon-controller?go-get=1</loc>
+    </url>
+    <url>
+        <loc>http://open-cluster-management.io/governance-policy-framework-addon?go-get=1</loc>
     </url>
     <url>
         <loc>http://open-cluster-management.io/governance-policy-nucleus?go-get=1</loc>

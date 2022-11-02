@@ -72,7 +72,7 @@
             </a>
           </li>
           <li class="nav-item pe-2">
-            <a class="nav-link text-light" href="https://kubernetes.slack.com/?redir=%2Farchives%2FC01GE7YSUUF" target="_blank">
+            <a class="nav-link text-light" href="https://kubernetes.slack.com/channels/open-cluster-mgmt" target="_blank">
               <i class="bi bi-slack"></i>
             </a>
           </li>
@@ -168,6 +168,14 @@
                 </li>
             </ul>
         </li>
+        <li id="developer-guides">
+            <a class="navlink" href="/developer-guides">Developer Guides</a>
+            <ul class="collapse">
+                <li>
+                    <a class="navlink" href="/developer-guides/addon">Add-on Developer Guide</a>
+                </li>
+            </ul>
+        </li>
         <li id="scenarios">
             <a class="navlink" href="/scenarios">Scenarios</a>
             <ul class="collapse">
@@ -183,6 +191,9 @@
                 <li>
                     <a class="navlink" href="/scenarios/extending-managed-clusters">Extend Managed Clusters</a>
                 </li>
+                <li>
+                    <a class="navlink" href="/scenarios/integration-with-argocd">Integration with Argo CD</a>
+                </li>                
                 <li>
                     <a class="navlink" href="/scenarios/pushing-kube-api-requests">Pushing Kube API Requests to the Managed Clusters</a>
                 </li>
@@ -209,7 +220,7 @@
             <a class="navlink resource" href="https://github.com/open-cluster-management-io" target="_blank"><i class="bi bi-github"></i><span style="padding-left: 10px;">GitHub</span></a>
         </li>
         <li>
-            <a class="navlink resource" href="https://kubernetes.slack.com/archives/C01GE7YSUUF" target="_blank"><i class="bi bi-slack"></i><span style="padding-left: 10px;">Slack</span></a>
+            <a class="navlink resource" href="https://kubernetes.slack.com/channels/open-cluster-mgmt" target="_blank"><i class="bi bi-slack"></i><span style="padding-left: 10px;">Slack</span></a>
         </li>
         <li>
             <a class="navlink resource" href="https://www.youtube.com/c/OpenClusterManagement" target="_blank"><i class="bi bi-youtube"></i><span style="padding-left: 10px;">YouTube</span></a>
@@ -305,7 +316,7 @@ kubectl create ns <span style="color:#e6db74">${</span>MANAGED_NAMESPACE<span st
 
 <span style="color:#75715e"># Apply the CRD</span>
 export COMPONENT<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;config-policy-controller&#34;</span>
-export GIT_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://raw.githubusercontent.com/open-cluster-management-io/</span><span style="color:#e6db74">${</span>COMPONENT<span style="color:#e6db74">}</span><span style="color:#e6db74">/main/deploy&#34;</span>
+export GIT_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://raw.githubusercontent.com/open-cluster-management-io/</span><span style="color:#e6db74">${</span>COMPONENT<span style="color:#e6db74">}</span><span style="color:#e6db74">/v0.9.0/deploy&#34;</span>
 kubectl apply -f <span style="color:#e6db74">${</span>GIT_PATH<span style="color:#e6db74">}</span>/crds/policy.open-cluster-management.io_configurationpolicies.yaml
 
 <span style="color:#75715e"># Set the managed cluster name</span>
@@ -343,7 +354,7 @@ placement API you desire to use.</p>
 kubectl config use-context <span style="color:#e6db74">${</span>CTX_HUB_CLUSTER<span style="color:#e6db74">}</span>
 
 <span style="color:#75715e"># Apply the example policy and placement</span>
-kubectl apply -n default -f https://raw.githubusercontent.com/gparvin/my-policies/main/policies/placement/policy-pod.yaml
+kubectl apply -n default -f https://raw.githubusercontent.com/stolostron/policy-collection/main/community/CM-Configuration-Management/policy-pod-placement.yaml
 </code></pre></div></li>
 <li>
 <p>Update the <code>Placement</code> to distribute the policy to the managed cluster with the following command

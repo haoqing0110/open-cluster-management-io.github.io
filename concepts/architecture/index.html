@@ -72,7 +72,7 @@
             </a>
           </li>
           <li class="nav-item pe-2">
-            <a class="nav-link text-light" href="https://kubernetes.slack.com/?redir=%2Farchives%2FC01GE7YSUUF" target="_blank">
+            <a class="nav-link text-light" href="https://kubernetes.slack.com/channels/open-cluster-mgmt" target="_blank">
               <i class="bi bi-slack"></i>
             </a>
           </li>
@@ -168,6 +168,14 @@
                 </li>
             </ul>
         </li>
+        <li id="developer-guides">
+            <a class="navlink" href="/developer-guides">Developer Guides</a>
+            <ul class="collapse">
+                <li>
+                    <a class="navlink" href="/developer-guides/addon">Add-on Developer Guide</a>
+                </li>
+            </ul>
+        </li>
         <li id="scenarios">
             <a class="navlink" href="/scenarios">Scenarios</a>
             <ul class="collapse">
@@ -183,6 +191,9 @@
                 <li>
                     <a class="navlink" href="/scenarios/extending-managed-clusters">Extend Managed Clusters</a>
                 </li>
+                <li>
+                    <a class="navlink" href="/scenarios/integration-with-argocd">Integration with Argo CD</a>
+                </li>                
                 <li>
                     <a class="navlink" href="/scenarios/pushing-kube-api-requests">Pushing Kube API Requests to the Managed Clusters</a>
                 </li>
@@ -209,7 +220,7 @@
             <a class="navlink resource" href="https://github.com/open-cluster-management-io" target="_blank"><i class="bi bi-github"></i><span style="padding-left: 10px;">GitHub</span></a>
         </li>
         <li>
-            <a class="navlink resource" href="https://kubernetes.slack.com/archives/C01GE7YSUUF" target="_blank"><i class="bi bi-slack"></i><span style="padding-left: 10px;">Slack</span></a>
+            <a class="navlink resource" href="https://kubernetes.slack.com/channels/open-cluster-mgmt" target="_blank"><i class="bi bi-slack"></i><span style="padding-left: 10px;">Slack</span></a>
         </li>
         <li>
             <a class="navlink resource" href="https://www.youtube.com/c/OpenClusterManagement" target="_blank"><i class="bi bi-youtube"></i><span style="padding-left: 10px;">YouTube</span></a>
@@ -264,7 +275,7 @@
 <h2 id="overview">Overview</h2>
 <p><strong>Open Cluster Management</strong> (OCM) is a powerful, modular, extensible platform
 for Kubernetes multi-cluster orchestration. Learning from the past failing
-lesson of building Kubernetes federation systems in the Kuberentes community,
+lesson of building Kubernetes federation systems in the Kubernetes community,
 in OCM we will be jumping out of the legacy centric, imperative architecture of
 <a href="https://github.com/kubernetes-sigs/kubefed">Kubefed v2</a> and embracing the
 &ldquo;hub-agent&rdquo; architecture which is identical to the original pattern of
@@ -281,7 +292,7 @@ Kubernetes cluster hosting merely a few fundamental controllers and services.</p
 </li>
 <li>
 <p><strong>Klusterlet</strong>: Indicating the clusters that being managed by the hub
-cluster, might also called as &ldquo;managed cluster&rdquo; or &ldquo;spoke cluster&rdquo;. The
+cluster. Klusterlet might also be called &ldquo;managed cluster&rdquo; or &ldquo;spoke cluster&rdquo;. The
 klusterlet is supposed to actively <strong>pulling</strong> the latest prescriptions from
 the hub cluster and consistently reconciles the physical Kubernetes cluster
 to the expected state.</p>
@@ -293,7 +304,7 @@ are de-coupling most of the multi-cluster operations generally into
 (1) computation/decision and (2) execution, and the actual execution against
 the target cluster will be completely off-loaded into the managed cluster. The
 hub cluster won&rsquo;t directly request against the real clusters, instead it
-just persists its prescriptions delcaratively for each cluster, and the
+just persists its prescriptions declaratively for each cluster, and the
 klusterlet will be actively pulling the prescriptions from the hub and doing
 the execution. Hence, the burden of the hub cluster will be greatly relieved
 because the hub cluster doesn&rsquo;t need to either deal with flooding events from
@@ -316,7 +327,7 @@ the managed cluster. Upon any accident, the klusterlet admin can quickly cut
 off the connection with the hub cluster without shutting the whole multi-cluster
 control plane down.</p>
 <div style="text-align: center; padding: 20px;">
-    <img src="https://github.com/open-cluster-management-io/community/raw/main/assets/ocm-arch.png" alt="Architecture diagram" style="margin: 0 auto; width: 50%">
+    <img src="https://github.com/open-cluster-management-io/OCM/raw/main/assets/ocm-arch.png" alt="Architecture diagram" style="margin: 0 auto; width: 50%">
 </div>
 <p>The &ldquo;hub-agent&rdquo; architecture also minimized the requirements in the network
 for registering a new cluster to the hub. Any cluster that can reach the
@@ -337,7 +348,7 @@ which is responsible for controlling the lifecycle of a managed controller
 and exporting the elementary <code>ManagedCluster</code> model.</p>
 <p>Another good example surfacing our modularity will be the <a href="https://open-cluster-management.io/concepts/placement/">placement</a>,
 a standalone module focusing at dynamically selecting the proper list of
-the managed clusters from user&rsquo;s prescription. You can build any advanced
+the managed clusters from the user&rsquo;s prescription. You can build any advanced
 multi-cluster orchestration on the top of placement, e.g. multi-cluster
 workload re-balancing, multi-cluster helm charts replication, etc. On the
 other hand if you&rsquo;re not satisfied by the current capacities from our placement
@@ -366,7 +377,7 @@ upon kicking a managed cluster.</p>
 <p>The worker cluster admin can list and read any managed cluster’s CSR,
 but those CSR cannot be used to impersonate due to the fact that CSR only
 contains the certificate. The client authentication requires both the key and certificate.
-The key is stored in each managed cluster, and it will not be transmitted across network.</p>
+The key is stored in each managed cluster, and it will not be transmitted across the network.</p>
 <p>The worker cluster admin cannot approve his or her own cluster registration by default.
 Two separate RBAC rules are needed to approve a cluster registration.
 The permission to approve the CSR and the permission to accept the managed cluster.
@@ -394,7 +405,7 @@ in peers. The addons are expected to implement the <code>ClusterManagementAddon<
 <p>The following is a list of commonly-used modules/subprojects that you might
 be interested in the journey of OCM:</p>
 <h3 id="registration">Registration</h3>
-<p>The core module of OCM managing the lifecycle of the managed clusters. The
+<p>The core module of OCM manages the lifecycle of the managed clusters. The
 registration controller in the hub cluster can be intuitively compared to a
 broker that represents and manages the hub cluster in terms of cluster
 registration, while the registration agent working in the managed cluster
