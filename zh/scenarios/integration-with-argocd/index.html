@@ -115,19 +115,25 @@
                     <a class="navlink" href="/zh/concepts/managedcluster">托管集群</a>
                 </li>
                 <li>
-                    <a class="navlink" href="/zh/concepts/manifestwork">资源下发</a>
-                </li>
-                <li>
                     <a class="navlink" href="/zh/concepts/managedclusterset">托管集群分组</a>
                 </li>
                 <li>
                     <a class="navlink" href="/zh/concepts/placement">匹配路由</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/zh/concepts/manifestwork">资源下发</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/zh/concepts/manifestworkreplicaset">资源下发组</a>
+                </li>
+                <li>
                     <a class="navlink" href="/zh/concepts/addon">自定义插件</a>
                 </li>
                 <li>
                     <a class="navlink" href="/zh/concepts/policy">Policy</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/zh/concepts/multicluster-controlplane">多集群控制面</a>
                 </li>
             </ul>
         </li>
@@ -202,6 +208,9 @@
                     <a class="navlink" href="/zh/scenarios/distribute-workload-with-placement">通过placement分发工作负载</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/zh/scenarios/migrate-workload-with-placement">通过placement迁移工作负载</a>
+                </li>
+                <li>
                     <a class="navlink" href="/zh/scenarios/extend-multicluster-scheduling-capabilities">扩展多集群调度能力</a>
                 </li>
                 <li>
@@ -211,7 +220,13 @@
                     <a class="navlink" href="/zh/scenarios/integration-with-argocd">集成Argo CD</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/zh/scenarios/manage-cluster-with-multiple-hubs">使用多个hub管理同一集群</a>
+                </li>
+                <li>
                     <a class="navlink" href="/zh/scenarios/pushing-kube-api-requests">向托管集群推送Kube API请求</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/zh/scenarios/register-cluster-through-proxy">通过代理服务器注册集群</a>
                 </li>
             </ul>
         </li>
@@ -285,7 +300,7 @@ also covers the integration with ArgoCD.</p>
 </span><span style="color:#e6db74">  matchKey: clusterName
 </span><span style="color:#e6db74">EOF</span>
 </code></pre></div><p>With reference to this generator, an <code>ApplicationSet</code> can target the application to the clusters listed in the status of a set of <code>PlacementDecision</code>, which belong to a certian Placement.</p>
-<p><strong>4. Grant Argo CD permissions to access OCM resoruces.</strong></p>
+<p><strong>4. Grant Argo CD permissions to access OCM resources.</strong></p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt; EOF | kubectl apply -f -
 </span><span style="color:#e6db74">apiVersion: rbac.authorization.k8s.io/v1
 </span><span style="color:#e6db74">kind: Role
@@ -383,7 +398,7 @@ guestbook-ui-6b689986f-cdrk8   1/1     Running   <span style="color:#ae81ff">0</
         </div>
         <div class="row"><nav class="ocm navbar navbar-expand-lg navbar-dark py-3">
   <div class="container-fluid flex-wrap flex-md-nowrap">
-    <div class="text-light">&copy; 2023 Open Cluster Management Authors. The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href="https://www.linuxfoundation.org/trademark-usage/" target="_blank" style="color: #f8f9fa;">Trademark Usage</a></div>
+    <div class="text-light">&copy; 2024 Open Cluster Management Authors. The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href="https://www.linuxfoundation.org/trademark-usage/" target="_blank" style="color: #f8f9fa;">Trademark Usage</a></div>
   </div>
 </nav>
 <script type="text/javascript" src="/lang.js"></script>

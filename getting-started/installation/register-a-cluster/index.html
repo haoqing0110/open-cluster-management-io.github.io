@@ -111,19 +111,25 @@
                     <a class="navlink" href="/concepts/managedcluster">ManagedCluster</a>
                 </li>
                 <li>
-                    <a class="navlink" href="/concepts/manifestwork">ManifestWork</a>
-                </li>
-                <li>
                     <a class="navlink" href="/concepts/managedclusterset">ManagedClusterSet</a>
                 </li>
                 <li>
                     <a class="navlink" href="/concepts/placement">Placement</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/concepts/manifestwork">ManifestWork</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/concepts/manifestworkreplicaset">ManifestWorkReplicaSet</a>
+                </li>
+                <li>
                     <a class="navlink" href="/concepts/addon">Add-ons</a>
                 </li>
                 <li>
                     <a class="navlink" href="/concepts/policy">Policy</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/concepts/multicluster-controlplane">Multicluster Control Plane</a>
                 </li>
             </ul>
         </li>
@@ -198,6 +204,9 @@
                     <a class="navlink" href="/scenarios/distribute-workload-with-placement">Distribute Workload With Placement</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/scenarios/migrate-workload-with-placement">Migrate Workload With Placement</a>
+                </li>
+                <li>
                     <a class="navlink" href="/scenarios/extend-multicluster-scheduling-capabilities">Extend Multicluster Scheduling Capabilities</a>
                 </li>
                 <li>
@@ -207,7 +216,13 @@
                     <a class="navlink" href="/scenarios/integration-with-argocd">Integration with Argo CD</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/scenarios/manage-cluster-with-multiple-hubs">Manage a cluster with multiple hubs</a>
+                </li>
+                <li>
                     <a class="navlink" href="/scenarios/pushing-kube-api-requests">Pushing Kube API Requests to the Managed Clusters</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/scenarios/register-cluster-through-proxy">Register a cluster to hub through proxy server</a>
                 </li>
             </ul>
         </li>
@@ -256,11 +271,16 @@
 
 
   <div class="gdoc-toc gdoc-toc__level--6"><nav id="TableOfContents"><ul>
-        <li><a href="#prerequisite">Prerequisite</a></li>
+        <li><a href="#prerequisite">Prerequisite</a>
+          <ul>
+            <li><a href="#network-requirements">Network requirements</a></li>
+          </ul>
+        </li>
         <li><a href="#install-clusteradm-cli-tool">Install clusteradm CLI tool</a></li>
         <li><a href="#bootstrap-a-klusterlet">Bootstrap a klusterlet</a>
           <ul>
             <li><a href="#bootstrap-a-klusterlet-in-hosted-modeoptional">Bootstrap a klusterlet in hosted mode(Optional)</a></li>
+            <li><a href="#bootstrap-a-klusterlet-in-singleton-mode">Bootstrap a klusterlet in singleton mode</a></li>
           </ul>
         </li>
         <li><a href="#accept-the-join-request-and-verify">Accept the join request and verify</a></li>
@@ -279,6 +299,29 @@
 <li>The managed clusters should be <code>v1.11+</code>.</li>
 <li>Ensure <a href="https://kubernetes.io/docs/tasks/tools/install-kubectl">kubectl</a> and <a href="https://kubectl.docs.kubernetes.io/installation/kustomize/">kustomize</a> are installed.</li>
 </ul>
+<h3 id="network-requirements">Network requirements</h3>
+<p>Configure your network settings for the managed clusters to allow the following connections.</p>
+<table>
+<thead>
+<tr>
+<th>Direction</th>
+<th>Endpoint</th>
+<th>Protocol</th>
+<th>Purpose</th>
+<th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Outbound</td>
+<td>https://{hub-api-server-url}:{port}</td>
+<td>TCP</td>
+<td>Kubernetes API server of the hub cluster</td>
+<td>OCM agents, including the add-on agents, running on the managed clusters</td>
+</tr>
+</tbody>
+</table>
+<p>To use a proxy, please make sure the proxy server is well configured to allow the above connections and the proxy server is reachable for the managed clusters. See <a href="https://open-cluster-management.io/scenarios/register-cluster-through-proxy/">Register a cluster to hub through proxy server</a> for more details.</p>
 <h2 id="install-clusteradm-cli-tool">Install clusteradm CLI tool</h2>
 <p>It&rsquo;s recommended to run the following command to download and install <strong>the
 latest release</strong> of the <code>clusteradm</code> command-line tool:</p>
@@ -371,10 +414,46 @@ clusteradm join <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>    --context &lt;your hosting cluster context&gt;
 </code></pre></div></div></div>
 
+<h3 id="bootstrap-a-klusterlet-in-singleton-mode">Bootstrap a klusterlet in singleton mode</h3>
+<p>To reduce the footprint of agent in the managed cluster, singleton mode is introduced since <code>v0.12.0</code>.
+In the singleton mode, the work and registration agent will be run as a single pod in the managed
+cluster.</p>
+<p><strong>Note:</strong> to run klusterlet in singleton mode, you must have a clusteradm version equal or higher than
+<code>v0.12.0</code></p>
+<ul class="nav nav-tabs" id="clusteradm-join" role="tablist"><li class="nav-item">
+			<button data-bs-toggle="tab" data-bs-target="#clusteradm-join-0" class="nav-link active" id="clusteradm-join-0-tab" role="tab" aria-controls="clusteradm-join-0" aria-selected="true">kind</button>
+		</li>
+	  
+		<li class="nav-item">
+			<button data-bs-toggle="tab" data-bs-target="#clusteradm-join-1" class="nav-link" id="clusteradm-join-1-tab" role="tab" aria-controls="clusteradm-join-1">k3s, openshift 4.X</button>
+		</li></ul>
+<div class="tab-content" id="clusteradm-join"><div id="clusteradm-join-0" class="tab-pane fade show active" role="tabpanel" aria-labelledby="clusteradm-join-0-tab">
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e"># NOTE: For KinD clusters use the parameter: --force-internal-endpoint-lookup</span>
+clusteradm join <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --hub-token &lt;your token data&gt; <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --hub-apiserver &lt;your hub cluster endpoint&gt; <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --wait <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --cluster-name <span style="color:#e6db74">&#34;cluster1&#34;</span> <span style="color:#ae81ff">\ </span>   <span style="color:#75715e"># Or other arbitrary unique name</span>
+    --singleton <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --force-internal-endpoint-lookup <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --context <span style="color:#e6db74">${</span>CTX_MANAGED_CLUSTER<span style="color:#e6db74">}</span>
+</code></pre></div></div>
+  <div id="clusteradm-join-1" class="tab-pane fade" role="tabpanel" aria-labelledby="clusteradm-join-1-tab">
+
+<p><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">clusteradm join <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --hub-token &lt;your token data&gt; <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --hub-apiserver &lt;your hub cluster endpoint&gt; <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --wait <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --cluster-name <span style="color:#e6db74">&#34;cluster1&#34;</span> <span style="color:#ae81ff">\ </span>  <span style="color:#75715e"># Or other arbitrary unique name</span>
+    --singleton <span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>    --context <span style="color:#e6db74">${</span>CTX_MANAGED_CLUSTER<span style="color:#e6db74">}</span>
+</code></pre></div></div></div>
+
 <h2 id="accept-the-join-request-and-verify">Accept the join request and verify</h2>
 <p>After the OCM agent is running on your managed cluster, it will be sending a &ldquo;handshake&rdquo; to your
 hub cluster and waiting for an approval from the hub cluster admin. In this section, we will walk
-through accepting the registration requests from the prespective of an OCM&rsquo;s hub admin.</p>
+through accepting the registration requests from the perspective of an OCM&rsquo;s hub admin.</p>
 <ol>
 <li>
 <p>Wait for the creation of the CSR object which will be created by your managed
@@ -469,7 +548,7 @@ error: the server doesn<span style="color:#960050;background-color:#1e0010">&#39
         </div>
         <div class="row"><nav class="ocm navbar navbar-expand-lg navbar-dark py-3">
   <div class="container-fluid flex-wrap flex-md-nowrap">
-    <div class="text-light">&copy; 2023 Open Cluster Management Authors. The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href="https://www.linuxfoundation.org/trademark-usage/" target="_blank" style="color: #f8f9fa;">Trademark Usage</a></div>
+    <div class="text-light">&copy; 2024 Open Cluster Management Authors. The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href="https://www.linuxfoundation.org/trademark-usage/" target="_blank" style="color: #f8f9fa;">Trademark Usage</a></div>
   </div>
 </nav>
 <script type="text/javascript" src="/lang.js"></script>

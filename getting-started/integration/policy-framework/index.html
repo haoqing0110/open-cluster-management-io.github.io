@@ -111,19 +111,25 @@
                     <a class="navlink" href="/concepts/managedcluster">ManagedCluster</a>
                 </li>
                 <li>
-                    <a class="navlink" href="/concepts/manifestwork">ManifestWork</a>
-                </li>
-                <li>
                     <a class="navlink" href="/concepts/managedclusterset">ManagedClusterSet</a>
                 </li>
                 <li>
                     <a class="navlink" href="/concepts/placement">Placement</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/concepts/manifestwork">ManifestWork</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/concepts/manifestworkreplicaset">ManifestWorkReplicaSet</a>
+                </li>
+                <li>
                     <a class="navlink" href="/concepts/addon">Add-ons</a>
                 </li>
                 <li>
                     <a class="navlink" href="/concepts/policy">Policy</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/concepts/multicluster-controlplane">Multicluster Control Plane</a>
                 </li>
             </ul>
         </li>
@@ -198,6 +204,9 @@
                     <a class="navlink" href="/scenarios/distribute-workload-with-placement">Distribute Workload With Placement</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/scenarios/migrate-workload-with-placement">Migrate Workload With Placement</a>
+                </li>
+                <li>
                     <a class="navlink" href="/scenarios/extend-multicluster-scheduling-capabilities">Extend Multicluster Scheduling Capabilities</a>
                 </li>
                 <li>
@@ -207,7 +216,13 @@
                     <a class="navlink" href="/scenarios/integration-with-argocd">Integration with Argo CD</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/scenarios/manage-cluster-with-multiple-hubs">Manage a cluster with multiple hubs</a>
+                </li>
+                <li>
                     <a class="navlink" href="/scenarios/pushing-kube-api-requests">Pushing Kube API Requests to the Managed Clusters</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/scenarios/register-cluster-through-proxy">Register a cluster to hub through proxy server</a>
                 </li>
             </ul>
         </li>
@@ -382,7 +397,7 @@ export HUB_CLUSTER_NAME<span style="color:#f92672">=</span><span style="color:#e
 export HUB_KUBECONFIG<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hub-kubeconfig&#34;</span>
 
 <span style="color:#75715e"># Apply the CRDs</span>
-export GIT_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://raw.githubusercontent.com/open-cluster-management-io/governance-policy-propagator/v0.11.0/deploy&#34;</span>
+export GIT_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://raw.githubusercontent.com/open-cluster-management-io/governance-policy-propagator/v0.12.0/deploy&#34;</span>
 kubectl apply -f <span style="color:#e6db74">${</span>GIT_PATH<span style="color:#e6db74">}</span>/crds/policy.open-cluster-management.io_policies.yaml
 kubectl apply -f <span style="color:#e6db74">${</span>GIT_PATH<span style="color:#e6db74">}</span>/crds/policy.open-cluster-management.io_placementbindings.yaml
 kubectl apply -f <span style="color:#e6db74">${</span>GIT_PATH<span style="color:#e6db74">}</span>/crds/policy.open-cluster-management.io_policyautomations.yaml
@@ -456,7 +471,7 @@ kubectl -n <span style="color:#e6db74">${</span>MANAGED_NAMESPACE<span style="co
 
 <span style="color:#75715e"># Apply the policy CRD</span>
 export GIT_PATH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://raw.githubusercontent.com/open-cluster-management-io&#34;</span>
-kubectl apply -f <span style="color:#e6db74">${</span>GIT_PATH<span style="color:#e6db74">}</span>/governance-policy-propagator/v0.11.0/deploy/crds/policy.open-cluster-management.io_policies.yaml
+kubectl apply -f <span style="color:#e6db74">${</span>GIT_PATH<span style="color:#e6db74">}</span>/governance-policy-propagator/v0.12.0/deploy/crds/policy.open-cluster-management.io_policies.yaml
 
 <span style="color:#75715e"># Set the managed cluster name and create the namespace</span>
 export MANAGED_CLUSTER_NAME<span style="color:#f92672">=</span>&lt;your managed cluster name&gt;  <span style="color:#75715e"># export MANAGED_CLUSTER_NAME=cluster1</span>
@@ -464,7 +479,7 @@ kubectl create ns <span style="color:#e6db74">${</span>MANAGED_CLUSTER_NAME<span
 
 <span style="color:#75715e"># Deploy the synchronization component</span>
 export COMPONENT<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;governance-policy-framework-addon&#34;</span>
-kubectl apply -f <span style="color:#e6db74">${</span>GIT_PATH<span style="color:#e6db74">}</span>/<span style="color:#e6db74">${</span>COMPONENT<span style="color:#e6db74">}</span>/v0.11.0/deploy/operator.yaml -n <span style="color:#e6db74">${</span>MANAGED_NAMESPACE<span style="color:#e6db74">}</span>
+kubectl apply -f <span style="color:#e6db74">${</span>GIT_PATH<span style="color:#e6db74">}</span>/<span style="color:#e6db74">${</span>COMPONENT<span style="color:#e6db74">}</span>/v0.12.0/deploy/operator.yaml -n <span style="color:#e6db74">${</span>MANAGED_NAMESPACE<span style="color:#e6db74">}</span>
 kubectl patch deployment governance-policy-framework-addon -n <span style="color:#e6db74">${</span>MANAGED_NAMESPACE<span style="color:#e6db74">}</span> <span style="color:#ae81ff">\
 </span><span style="color:#ae81ff"></span>  -p <span style="color:#e6db74">&#34;{\&#34;spec\&#34;:{\&#34;template\&#34;:{\&#34;spec\&#34;:{\&#34;containers\&#34;:[{\&#34;name\&#34;:\&#34;governance-policy-framework-addon\&#34;,\&#34;args\&#34;:[\&#34;--hub-cluster-configfile=/var/run/klusterlet/kubeconfig\&#34;, \&#34;--cluster-namespace=</span><span style="color:#e6db74">${</span>MANAGED_CLUSTER_NAME<span style="color:#e6db74">}</span><span style="color:#e6db74">\&#34;, \&#34;--enable-lease=true\&#34;, \&#34;--log-level=2\&#34;, \&#34;--disable-spec-sync=</span><span style="color:#e6db74">${</span>DEPLOY_ON_HUB<span style="color:#e6db74">}</span><span style="color:#e6db74">\&#34;]}]}}}}&#34;</span>
 </code></pre></div></li>
@@ -484,7 +499,7 @@ governance-policy-framework-addon-6474b6d898-tmkw6  1/1     Running   <span styl
         </div>
         <div class="row"><nav class="ocm navbar navbar-expand-lg navbar-dark py-3">
   <div class="container-fluid flex-wrap flex-md-nowrap">
-    <div class="text-light">&copy; 2023 Open Cluster Management Authors. The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href="https://www.linuxfoundation.org/trademark-usage/" target="_blank" style="color: #f8f9fa;">Trademark Usage</a></div>
+    <div class="text-light">&copy; 2024 Open Cluster Management Authors. The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href="https://www.linuxfoundation.org/trademark-usage/" target="_blank" style="color: #f8f9fa;">Trademark Usage</a></div>
   </div>
 </nav>
 <script type="text/javascript" src="/lang.js"></script>

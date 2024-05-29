@@ -111,19 +111,25 @@
                     <a class="navlink" href="/concepts/managedcluster">ManagedCluster</a>
                 </li>
                 <li>
-                    <a class="navlink" href="/concepts/manifestwork">ManifestWork</a>
-                </li>
-                <li>
                     <a class="navlink" href="/concepts/managedclusterset">ManagedClusterSet</a>
                 </li>
                 <li>
                     <a class="navlink" href="/concepts/placement">Placement</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/concepts/manifestwork">ManifestWork</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/concepts/manifestworkreplicaset">ManifestWorkReplicaSet</a>
+                </li>
+                <li>
                     <a class="navlink" href="/concepts/addon">Add-ons</a>
                 </li>
                 <li>
                     <a class="navlink" href="/concepts/policy">Policy</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/concepts/multicluster-controlplane">Multicluster Control Plane</a>
                 </li>
             </ul>
         </li>
@@ -198,6 +204,9 @@
                     <a class="navlink" href="/scenarios/distribute-workload-with-placement">Distribute Workload With Placement</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/scenarios/migrate-workload-with-placement">Migrate Workload With Placement</a>
+                </li>
+                <li>
                     <a class="navlink" href="/scenarios/extend-multicluster-scheduling-capabilities">Extend Multicluster Scheduling Capabilities</a>
                 </li>
                 <li>
@@ -207,7 +216,13 @@
                     <a class="navlink" href="/scenarios/integration-with-argocd">Integration with Argo CD</a>
                 </li>
                 <li>
+                    <a class="navlink" href="/scenarios/manage-cluster-with-multiple-hubs">Manage a cluster with multiple hubs</a>
+                </li>
+                <li>
                     <a class="navlink" href="/scenarios/pushing-kube-api-requests">Pushing Kube API Requests to the Managed Clusters</a>
+                </li>
+                <li>
+                    <a class="navlink" href="/scenarios/register-cluster-through-proxy">Register a cluster to hub through proxy server</a>
                 </li>
             </ul>
         </li>
@@ -272,6 +287,10 @@
 
 <!-- spellchecker-enable -->
 <h2 id="overview">Overview</h2>
+<p>Note: this is also covered in the
+<a href="https://www.youtube.com/watch?v=ZZH654t5YpI">Open Cluster Management - Configuring Your Kubernetes Fleet With the Policy Addon</a>
+video.</p>
+<p><a href="https://www.youtube.com/watch?v=ZZH654t5YpI"><img src="https://img.youtube.com/vi/ZZH654t5YpI/0.jpg" alt="Open Cluster Management - Configuring Your Kubernetes Fleet With the Policy Addon"></a></p>
 <p>The policy framework has the following API concepts:</p>
 <ul>
 <li><a href="#managed-cluster-policy-controllers"><em>Policy Templates</em></a> are the policies that perform a desired check or action. For
@@ -388,7 +407,7 @@ the <code>PolicySet</code>.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#66d9ef">apiVersion</span>: policy.open-cluster-management.io/v1beta1
 <span style="color:#66d9ef">kind</span>: PolicySet
 <span style="color:#66d9ef">metadata</span>:
-  <span style="color:#66d9ef">name</span>: acm-hardening
+  <span style="color:#66d9ef">name</span>: ocm-hardening
   <span style="color:#66d9ef">namespace</span>: policies
 <span style="color:#66d9ef">spec</span>:
   <span style="color:#66d9ef">description</span>: Apply standard best practices for hardening your Open Cluster Management installation.
@@ -572,7 +591,7 @@ use the new encryption key.</p>
         </div>
         <div class="row"><nav class="ocm navbar navbar-expand-lg navbar-dark py-3">
   <div class="container-fluid flex-wrap flex-md-nowrap">
-    <div class="text-light">&copy; 2023 Open Cluster Management Authors. The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href="https://www.linuxfoundation.org/trademark-usage/" target="_blank" style="color: #f8f9fa;">Trademark Usage</a></div>
+    <div class="text-light">&copy; 2024 Open Cluster Management Authors. The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href="https://www.linuxfoundation.org/trademark-usage/" target="_blank" style="color: #f8f9fa;">Trademark Usage</a></div>
   </div>
 </nav>
 <script type="text/javascript" src="/lang.js"></script>
